@@ -55,7 +55,10 @@ $ShowOnlyErrorVDI = 0
 $ShowXenAppTable = 1
 # Define the if the of XenApp servers having a D:
 $XAServerHaveD = 1
-
+#Define driverletters for cachedisk:
+$PvsWriteCache = "d$"
+#Define maxsize for cachedisk:
+$PvsWriteMaxSize = "40"
 
 # Set to 1 if you want to see connected XenApp Users
 $ShowConnectedXenAppUsers = 1
@@ -906,10 +909,10 @@ $tests.DesktopGroupName = "NEUTRAL", $DesktopGroupName
 				$XAPercentageDSd = $HardDiskd.PercentageDS
 				$frSpaced = $HardDiskd.frSpace
 
-				If ( [int] $XAPercentageDSd -gt 15) { "Disk Free is normal [ $XAPercentageDSd % ]" | LogMe -display; $tests.CFreespace = "SUCCESS", "$frSpaced GB" } 
+				If ( [int] $XAPercentageDSd -gt 15) { "Disk Free is normal [ $XAPercentageDSd % ]" | LogMe -display; $tests.DFreespace = "SUCCESS", "$frSpaced GB" } 
 				ElseIf ([int] $XAPercentageDSd -eq 0) { "Disk Free test failed" | LogMe -error; $tests.CFreespace = "ERROR", "Err" }
-				ElseIf ([int] $XAPercentageDSd -lt 5) { "Disk Free is Critical [ $XAPercentageDSd % ]" | LogMe -error; $tests.CFreespace = "ERROR", "$frSpaced GB" } 
-				ElseIf ([int] $XAPercentageDSd -lt 15) { "Disk Free is Low [ $XAPercentageDSd % ]" | LogMe -warning; $tests.CFreespace = "WARNING", "$frSpaced GB" }     
+				ElseIf ([int] $XAPercentageDSd -lt 5) { "Disk Free is Critical [ $XAPercentageDSd % ]" | LogMe -error; $tests.DFreespace = "ERROR", "$frSpaced GB" } 
+				ElseIf ([int] $XAPercentageDSd -lt 15) { "Disk Free is Low [ $XAPercentageDSd % ]" | LogMe -warning; $tests.DFreespace = "WARNING", "$frSpaced GB" }     
 				Else { "Disk Free is Critical [ $XAPercentageDSd % ]" | LogMe -error; $tests.CFreespace = "ERROR", "$frSpaced GB" }  
 				
 				$XAPercentageDSd = 0
